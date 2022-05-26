@@ -9,7 +9,7 @@ using WebApi.BookOperations.GetBooks;
 using WebApi.BookOperations.UpdateBook;
 using WebApi.Context;
 using static WebApi.BookOperations.CreateBook.CreateBookCommand;
-using static WebApi.BookOperations.GetBookDetails.GetBookDetailsCommand;
+using static WebApi.BookOperations.GetBookDetails.GetBookDetailQuery;
 using static WebApi.BookOperations.UpdateBook.UpdateBookCommand;
 
 namespace WebApi.Controllers
@@ -41,7 +41,7 @@ namespace WebApi.Controllers
             BookDetailsModel result;
             try
             {
-                GetBookDetailsCommand bookdetail = new GetBookDetailsCommand(_context, _mapper);
+                GetBookDetailQuery bookdetail = new GetBookDetailQuery(_context, _mapper);
                 bookdetail.BookId = id;
                 GetBookDetailsValidator validations = new GetBookDetailsValidator();
                 validations.ValidateAndThrow(bookdetail);
@@ -59,26 +59,26 @@ namespace WebApi.Controllers
         public IActionResult AddBook([FromBody] CreateBookModel newbook)
         {
             CreateBookCommand cb = new CreateBookCommand(_context, _mapper);
-            try
-            {
+            //try
+            //{
                 cb.Model = newbook;
                 CreateBookValidator validations = new CreateBookValidator();
                 validations.ValidateAndThrow(cb);
+                cb.Handle();
+            //    if (!result.IsValid)
+            //        foreach (var item in result.Errors)
+            //        {
+            //            Console.WriteLine("Özellik" + item.PropertyName + " - Error Message: " + item.ErrorMessage);
+            //        }
+            //    else
 
-                //if (!result.IsValid)
-                //    foreach (var item in result.Errors)
-                //    {
-                //        Console.WriteLine("Özellik" + item.PropertyName + " - Error Message: " + item.ErrorMessage);
-                //    }
-                //else
-                    cb.Handle();
-                
-            }
-            catch (Exception ex)
-            {
 
-                return BadRequest(ex.Message);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+
+            //    return BadRequest(ex.Message);
+            //}
 
             return Ok();
         }

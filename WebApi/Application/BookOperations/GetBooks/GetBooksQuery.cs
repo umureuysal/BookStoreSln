@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using WebApi.Common;
 using WebApi.Context;
@@ -18,7 +19,7 @@ namespace WebApi.BookOperations.GetBooks
 
         public List<BooksViewModel> Handle()
         {
-            var booklist = _context.Books.ToList();
+            var booklist = _context.Books.Include(x=>x.Genre).ToList();
             List<BooksViewModel> vm = _mapper.Map<List<BooksViewModel>>(booklist);
                 
                 //new List<BooksViewModel>();
@@ -42,5 +43,6 @@ namespace WebApi.BookOperations.GetBooks
         public int PageCount { get; set; }
         public string PublishDate { get; set; }
         public string Genre { get; set; }
+        public string Author { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace WebApi.BookOperations.GetBookDetails
 {
-    public class GetBookDetailsValidator:AbstractValidator<GetBookDetailsCommand>
+    public class GetBookDetailsValidator:AbstractValidator<GetBookDetailQuery>
     {
         public GetBookDetailsValidator()
         {

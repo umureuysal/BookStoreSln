@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using WebApi.Entities;
 
 namespace WebApi.Context
 {
@@ -12,6 +13,21 @@ namespace WebApi.Context
                 {
                     return;
                 }
+
+                context.Genres.AddRange(
+                    new Genre
+                    {
+                        Name="Personal Growth"
+                    },
+                    new Genre
+                    {
+                        Name="Science Fiction"
+                    },
+                    new Genre
+                    {
+                        Name="Novel"
+                    }
+                    );
 
                 context.Books.AddRange(
                 new Book
@@ -39,6 +55,25 @@ namespace WebApi.Context
                     PublishDate = new DateTime(2003, 12, 23)
                 }
                 );
+                context.AddRange(
+                    new Author
+                    {
+                        FirstName = "Fyodor",
+                        LastName = "Dostoyevski",
+                        DateofBirth = new DateTime(1821, 11, 11)
+                    },
+                    new Author
+                    {
+                        FirstName = "Charles",
+                        LastName = "Dickens",
+                        DateofBirth = new DateTime(1812, 02, 07)
+                    },
+                    new Author
+                    {
+                        FirstName = "Virginia",
+                        LastName = "Woolf",
+                        DateofBirth = new DateTime(1882, 01, 25)
+                    });
                 context.SaveChanges();
             };
 

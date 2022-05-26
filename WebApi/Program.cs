@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using WebApi.Context;
+using WebApi.Middleware;
+using WebApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +14,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseInMemoryDatabase(databaseName: "BookStoreDb"));
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
-
+builder.Services.AddSingleton<ILoggerService, ConsoleLogger>();
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -32,6 +34,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseCustomExceptionMiddleware();
 
 app.MapControllers();
 
